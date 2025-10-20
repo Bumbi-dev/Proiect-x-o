@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +8,19 @@
   <style style.css></style>
   <title>Proiect X&0</title>
 </head>
+
 <body>
   <div class="login">
-    <input type="text" placeholder="Nume">
+    <input id="nume" type="text" placeholder="Nume" />
 
     <div class="checkbox-container">
-      <label><input type="checkbox" class="c1"> Mana stanga</label>
-      <label><input type="checkbox" class="c2"> Mana dreapta</label>
+        <input type="radio" name="hand" value="left"> Mana stanga
+        <input type="radio" name="hand" value="right"> Mana dreapta
     </div>
-    
-    <button id="btnlogin" onclick="location.href='game.html'">Submit</button>
-  </div>
 
+    <button id="btnlogin" onclick="location.href='../joc/game.html'">Submit</button>
+  </div>
   <script src="test.js"></script>
 </body>
+
 </html>

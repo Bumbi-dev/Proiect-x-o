@@ -1,8 +1,37 @@
-.login {
-  display:flex;
-  justify-content: center;
-  margin-top: 300px;
-  align-items: center;
-  
+body{
+  background-color: lightblue;
 }
 
+.login{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 100px;
+}
+
+#nume {
+  width: 300px;      /* wider */
+  height: 40px;      /* taller */
+  font-size: 20px;   /* bigger text */
+  padding: 5px 10px; /* inner spacing */
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; 
+  padding-top : 130px;
+  font-size: 25px;
+}
+
+#btnlogin {
+  margin-top: 150px;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

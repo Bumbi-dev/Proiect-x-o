@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: lightblue;
+}
+
+#careu{
+    background: #6FA4AF;
+    height: 400px;
+    width: 400px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr); 
+    gap: 4px;
+
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.cell {
+    background: #F4E9D7;
+    color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    
+    font-size: 80px;
+    font: bold;
+}
