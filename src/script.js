@@ -1,25 +1,23 @@
 import * as DB from '../utils/db_manager.js';
-document.getElementById('btnlogin').addEventListener('click', submit);
+
+document.getElementById('Submit').addEventListener('click', submit);
 
 var Nume= document.getElementById ("Nume")
-
 var ManaS= document.getElementById ("mana-stanga")
-
 var ManaD= document.getElementById ("mana-dreapta")
 
-
-
 function submit() {
-    // TO DO nu trimite la site
-    if(ManaS.isChecked)
+    if (Nume.value == "")
+        return;
+
+    if(ManaS.checked)
     {
         DB.sendPersonalData(Nume.value, "Stanga")
+        location.href="../joc/game2.html"
     }
-    if(ManaD.isChecked)
+    if(ManaD.checked)
     {
         DB.sendPersonalData(Nume.value, "Dreapta")
+        location.href="../joc/game2.html"
     }
-
-    location.href="../joc/game.html"
-    
 }
