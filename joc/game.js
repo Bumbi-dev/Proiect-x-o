@@ -1,4 +1,4 @@
-import * as DB from '../utils/db_manager.js';
+// import * as DB from '../utils/db_manager.js';
 
 let game = new Array(9);
 let classLine = '';
