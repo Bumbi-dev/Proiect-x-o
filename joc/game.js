@@ -1,3 +1,5 @@
+import * as DB from '../utils/db_manager.js';
+
 let casute = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 let player_turn = 1
