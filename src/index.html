@@ -12,17 +12,17 @@
   <h1 class="title">X & 0</h1>
   <div class="login">
 
-    <input type="text" placeholder="Nume">
+    <input id="Nume" type="text" placeholder="Nume">
 
-    <div class="checkboxes">
-      <label><input type="checkbox"> Mana stanga </label>
-      <label><input type="checkbox"> Mana dreapta</label>
+    <div class="radios">
+      <label><input type="radio" name="mana" id="mana-stanga"> Mana stanga </label>
+      <label><input type="radio" name="mana" id="mana-dreapta"> Mana dreapta </label>
     </div>
 
-    <button id="btnlogin" onclick="location.href = '../joc/game.html'">Submit</button>
+    <button id="btnlogin">Submit</button>
   </div>
 
-  <script src="test.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 
 </html>

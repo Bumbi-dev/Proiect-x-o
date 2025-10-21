@@ -50,11 +50,11 @@ input[type="text"] {
 input[type="text"]::placeholder {
   color: #aaa;
 }
-.checkboxes {
+.radios {
   display: flex;
   justify-content: space-between;
 }
-.checkboxes label {
+.radios label {
   display: flex;
   align-items: center;
   gap: 8px;

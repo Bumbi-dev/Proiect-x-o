@@ -23,8 +23,11 @@ body {
 
     border-radius: 12px;
     border-style: groove;
-    border-color: #ffd000;
+    border-style: double;
+    border-color: #000000;
     overflow: hidden;
+    box-shadow: 0px 0px 330px rgba(225, 255, 255, 0.6);
+    
 }
 
 .cell {
