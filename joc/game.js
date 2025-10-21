@@ -42,7 +42,7 @@ const init = () => {
 };
 
 const checkGameEnd = () => {
-	let result = '';
+	let result='';
 	let line = '';
 	if (checkWinner(game, player_turn)) {
 		result = `A castigat jucatorul cu ${player_turn}`;
