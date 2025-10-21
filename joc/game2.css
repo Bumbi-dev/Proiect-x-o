@@ -38,6 +38,7 @@ body {
 
     font-size: 80px;
     font: bold;
+    cursor: pointer;
 }
 
 #selectX {
@@ -50,6 +51,7 @@ body {
     border-radius: 10px;
     font-size: 40px;
     font: bold;
+    cursor: pointer;
 
 }
 
@@ -67,6 +69,7 @@ body {
     border-radius: 10px;
     font-size: 40px;
     font: bold;
+    cursor: pointer;
 }
 
 #selectO:focus {
@@ -84,6 +87,7 @@ body {
     border-radius: 10px;
     font-size: 40px;
     font: bold;
+    cursor: pointer;
 }
 
 #reset:focus {
