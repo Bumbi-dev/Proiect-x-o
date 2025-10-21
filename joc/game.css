@@ -89,3 +89,9 @@ body {
 #reset:focus {
     background-color: gray;
 }
+
+#result {
+    color:red;
+    background-color: red;
+    font-size:medium;
+}
