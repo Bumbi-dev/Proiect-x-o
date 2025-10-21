@@ -10,6 +10,7 @@ var ManaD= document.getElementById ("mana-dreapta")
 
 
 function submit() {
+    // TO DO nu trimite la site
     if(ManaS.isChecked)
     {
         DB.sendPersonalData(Nume.value, "Stanga")

@@ -12,4 +12,3 @@ const selectPlayer = (player) => {
     disableO.disabled=true;
 	}
 }; */
-
