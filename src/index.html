@@ -5,21 +5,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <style style.css></style>
   <title>Proiect X&0</title>
 </head>
 
 <body>
+  <h1 class="title">X & 0</h1>
   <div class="login">
-    <input id="nume" type="text" placeholder="Nume" />
 
-    <div class="checkbox-container">
-        <input type="radio" name="hand" value="left"> Mana stanga
-        <input type="radio" name="hand" value="right"> Mana dreapta
+    <input type="text" placeholder="Nume">
+
+    <div class="checkboxes">
+      <label><input type="checkbox"> Mana stanga </label>
+      <label><input type="checkbox"> Mana dreapta</label>
     </div>
 
-    <button id="btnlogin" onclick="location.href='../joc/game.html'">Submit</button>
+    <button id="btnlogin" onclick="location.href = '../joc/game.html'">Submit</button>
   </div>
+
   <script src="test.js"></script>
 </body>
 
