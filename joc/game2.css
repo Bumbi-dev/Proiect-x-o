@@ -1,0 +1,91 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("../res/xsi0.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+}
+
+#careu {
+    background: #020202;
+    height: 400px;
+    width: 400px;
+    position: absolute;
+    top: 130px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+
+    border-radius: 12px;
+    border-style: groove;
+    border-color: #ffd000;
+    overflow: hidden;
+}
+
+.cell {
+    background: #ffffff;
+    color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+
+    font-size: 80px;
+    font: bold;
+}
+
+#selectX {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 600px;
+    left: 500px;
+    border-radius: 10px;
+    font-size: 40px;
+    font: bold;
+
+}
+
+#selectX:focus {
+    background-color: gray;
+}
+
+#selectO {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 600px;
+    right: 650px;
+    border-radius: 10px;
+    font-size: 40px;
+    font: bold;
+}
+
+#selectO:focus {
+    background-color: gray;
+}
+
+
+#reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 600px;
+    right: 500px;
+    border-radius: 10px;
+    font-size: 40px;
+    font: bold;
+}
+
+#reset:focus {
+    background-color: gray;
+}
