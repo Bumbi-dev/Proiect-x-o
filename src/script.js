@@ -11,13 +11,9 @@ function submit() {
         return;
 
     if(ManaS.checked)
-    {
         DB.sendPersonalData(Nume.value, "Stanga")
-        location.href="../joc/game2.html"
-    }
     if(ManaD.checked)
-    {
         DB.sendPersonalData(Nume.value, "Dreapta")
-        location.href="../joc/game2.html"
-    }
+
+    location.href="../joc/game2.html"
 }

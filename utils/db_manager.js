@@ -1,12 +1,12 @@
-//TODO encode cells ticked to an int ex 0102012 or 1020120, 0 delimiteaza numarul 
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
+//TODO change these to environment variables in render
 var url = "https://vusnehluabjnecixaoee.supabase.co"
 var anon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1c25laGx1YWJqbmVjaXhhb2VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjQ1OTIsImV4cCI6MjA3NjUwMDU5Mn0.ZJ0rxiMM5CqSvE7WypjJxm-ySeHv7zqKkU2YR6T6xQw'
 
 const supabase = createClient(url, anon)
 
-var id;//unique key
+var id;
 
 export async function logAll() {
     const { data, error } = await supabase.from('User Data').select('*');
@@ -48,7 +48,7 @@ export async function sendPersonalData(name, hand) {
 }
 
 //TODO update the entry using id
-export async function updateGameData(name, hand) {
+export async function updateGameData(id) {
     const { data, error } = await supabase.from('User Data').select('*')
 
     if (error)
