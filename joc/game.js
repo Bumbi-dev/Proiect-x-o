@@ -6,6 +6,8 @@ const cell = document.querySelectorAll('.cell');
 let player_turn = 'X';
 let AI_turn = 'O';
 
+let AILevel = 1;
+
 const winningCombinations = [
 	{ 'combination': [0, 1, 2], 'lineClass': 'line-horizontal-top' },
 	{ 'combination': [3, 4, 5], 'lineClass': 'line-horizontal-center' },
@@ -18,27 +20,38 @@ const winningCombinations = [
 ];
 
 const init = () => {
-    cell.forEach((el, i) => {
+	cell.forEach((el, i) => {
 		el.addEventListener('click', () => {
 			try {
 				if (!checkWinner(game, player_turn) && !checkWinner(game, AI_turn)) {
 					mark(el, player_turn);
 					if (!checkWinner(game, player_turn)) {
-						computer();
+						switch (AILevel) {
+							case 1:
+								computerNoob();
+								break;
+							case 2:
+								computerAvarage();
+								break;
+							case 3:
+								computerBoss();
+								break;
+							default:
+						}
 					}
-				} 
-                checkGameEnd();
+				}
+				checkGameEnd();
 			} catch (error) {
 				console.error(error);
 				alert(error);
 			}
 		});
-        el.setAttribute('data-cell', i);
-    });
+		el.setAttribute('data-cell', i);
+	});
 };
 
 const checkGameEnd = () => {
-	let result='';
+	let result = '';
 	let line = '';
 	if (checkWinner(game, player_turn)) {
 		result = `A castigat jucatorul cu ${player_turn}`;
@@ -55,16 +68,16 @@ const checkGameEnd = () => {
 };
 
 const mark = (el, player) => {
-    if (!isChecked(el)) {
-        el.innerHTML = player;
+	if (!isChecked(el)) {
+		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
-        game[parseInt(el.getAttribute('data-cell'))] = player;
-        if (checkWinner(game, player)) {
-            document.querySelector("#line").classList.remove('d-none');
-        }      
-    } else {
-        throw new Error('Nu poti pune intr-un chenar deja ocupat!');
-    }
+		game[parseInt(el.getAttribute('data-cell'))] = player;
+		if (checkWinner(game, player)) {
+			document.querySelector("#line").classList.remove('d-none');
+		}
+	} else {
+		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
+	}
 };
 
 //TODO add this to retry button
@@ -85,11 +98,11 @@ const selectPlayer = (player) => {
 	if (player == AI_turn) {
 		player_turn = 'O';
 		AI_turn = 'X';
-    disableX.disabled=true;
+		disableX.disabled = true;
 	} else {
 		player_turn = 'X';
 		AI_turn = 'O';
-    disableO.disabled=true;
+		disableO.disabled = true;
 	}
 };
 
@@ -105,7 +118,7 @@ const emptyCells = (gameCurrent) => {
 	return empty;
 }
 
-const computer = () => {
+const computerBoss = () => {
 	let empty = emptyCells(game);
 	if (empty.length > 0) {
 		let bestMove = miniMax(game, AI_turn, empty.length);
@@ -138,59 +151,105 @@ const miniMax = (gameCurrent, player, depth) => {
 	const min = (a, b) => {
 		return a < b ? a : b;
 	}
-	
+
 	const max = (a, b) => {
 		return a > b ? a : b;
 	}
 
-    let empty = emptyCells(gameCurrent);
+	let empty = emptyCells(gameCurrent);
 
-    if (checkWinner(gameCurrent, player_turn)) {
-        return { score: -1 };
-    }
-    if (checkWinner(gameCurrent, AI_turn)) {
-        return { score: 1 };
-    }
-    if (empty.length === 0 || depth === 0) {
-        return { score: 0 };
-    }
-    
-    depth--;
+	if (checkWinner(gameCurrent, player_turn)) {
+		return { score: -1 };
+	}
+	if (checkWinner(gameCurrent, AI_turn)) {
+		return { score: 1 };
+	}
+	if (empty.length === 0 || depth === 0) {
+		return { score: 0 };
+	}
 
-    let movePossibles = [];
+	depth--;
 
-    for (let i = 0; i < empty.length; i++) {
-        let move = {};
-        move.index = empty[i];
+	let movePossibles = [];
 
-        let newGame = gameCurrent.slice();
-        newGame[empty[i]] = player;
+	for (let i = 0; i < empty.length; i++) {
+		let move = {};
+		move.index = empty[i];
+
+		let newGame = gameCurrent.slice();
+		newGame[empty[i]] = player;
 
 		let result = miniMax(newGame, player === AI_turn ? player_turn : AI_turn, depth);
-        move.score = result.score;
-        movePossibles.push(move);
-    }
+		move.score = result.score;
+		movePossibles.push(move);
+	}
 
-	let bestMove;	
-    if (player === AI_turn) {
-        bestScore = -Infinity;
-        for (let i = 0; i < movePossibles.length; i++) {
-            bestScore = max(bestScore, movePossibles[i].score);
-            if (movePossibles[i].score === bestScore) {
+	let bestMove;
+	if (player === AI_turn) {
+		bestScore = -Infinity;
+		for (let i = 0; i < movePossibles.length; i++) {
+			bestScore = max(bestScore, movePossibles[i].score);
+			if (movePossibles[i].score === bestScore) {
 				bestMove = i;
-            }
-        }
-    } else {
-        bestScore = Infinity;
-        for (let i = 0; i < movePossibles.length; i++) {
-            bestScore = min(bestScore, movePossibles[i].score);
-            if (movePossibles[i].score === bestScore) {
+			}
+		}
+	} else {
+		bestScore = Infinity;
+		for (let i = 0; i < movePossibles.length; i++) {
+			bestScore = min(bestScore, movePossibles[i].score);
+			if (movePossibles[i].score === bestScore) {
 				bestMove = i;
-            }
-        }
-    }
+			}
+		}
+	}
 
-    return movePossibles[bestMove];
+	return movePossibles[bestMove];
 }
+
+const computerNoob = () => {
+	let empty = emptyCells(game);
+	if (empty.length > 0) {
+		// Pick a random empty cell
+		const randomIndex = Math.floor(Math.random() * empty.length);
+		const moveIndex = empty[randomIndex];
+		mark(cell[moveIndex], AI_turn);
+	}
+}
+
+const findWinningMove = (gameCurrent, player) => {
+	let empty = emptyCells(gameCurrent);
+	for (let i = 0; i < empty.length; i++) {
+		let testBoard = [...gameCurrent];
+		testBoard[empty[i]] = player;
+		if (checkWinner(testBoard, player)) {
+			return empty[i];
+		}
+	}
+	return -1;
+};
+
+const computerAvarage = () => {
+	let empty = emptyCells(game);
+	if (empty.length > 0) {
+		// First priority: Win if possible
+		const winningMove = findWinningMove(game, AI_turn);
+		if (winningMove !== -1) {
+			mark(cell[winningMove], AI_turn);
+			return;
+		}
+
+		// Second priority: Block player's winning move
+		const blockingMove = findWinningMove(game, player_turn);
+		if (blockingMove !== -1) {
+			mark(cell[blockingMove], AI_turn);
+			return;
+		}
+
+		// If no strategic moves, make a random move
+		const randomIndex = Math.floor(Math.random() * empty.length);
+		const moveIndex = empty[randomIndex];
+		mark(cell[moveIndex], AI_turn);
+	}
+};
 
 init();
