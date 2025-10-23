@@ -6,10 +6,6 @@ const cell = document.querySelectorAll('.cell');
 let player_turn = 'X';
 let AI_turn = 'O';
 
-var disableX = document.getElementById("selectX");
-
-var disableO = document.getElementById("selectO");
-
 const winningCombinations = [
 	{ 'combination': [0, 1, 2], 'lineClass': 'line-horizontal-top' },
 	{ 'combination': [3, 4, 5], 'lineClass': 'line-horizontal-center' },
@@ -22,7 +18,7 @@ const winningCombinations = [
 ];
 
 const init = () => {
-    cell.forEach((el, i) => {
+	cell.forEach((el, i) => {
 		el.addEventListener('click', () => {
 			try {
 				if (!checkWinner(game, player_turn) && !checkWinner(game, AI_turn)) {
@@ -30,19 +26,19 @@ const init = () => {
 					if (!checkWinner(game, player_turn)) {
 						computer();
 					}
-				} 
-                checkGameEnd();
+				}
+				checkGameEnd();
 			} catch (error) {
 				console.error(error);
 				alert(error);
 			}
 		});
-        el.setAttribute('data-cell', i);
-    });
+		el.setAttribute('data-cell', i);
+	});
 };
 
 const checkGameEnd = () => {
-	let result='';
+	let result = '';
 	let line = '';
 	if (checkWinner(game, player_turn)) {
 		result = `A castigat jucatorul cu ${player_turn}`;
@@ -59,50 +55,40 @@ const checkGameEnd = () => {
 };
 
 const mark = (el, player) => {
-    showButtons(false);
-    if (!isChecked(el)) {
-        el.innerHTML = player;
+	if (!isChecked(el)) {
+		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
-        game[parseInt(el.getAttribute('data-cell'))] = player;
-        if (checkWinner(game, player)) {
-            document.querySelector("#line").classList.remove('d-none');
-        }      
-    } else {
-        throw new Error('Nu poti pune intr-un chenar deja ocupat!');
-    }
+		game[parseInt(el.getAttribute('data-cell'))] = player;
+		if (checkWinner(game, player)) {
+			document.querySelector("#line").classList.remove('d-none');
+		}
+	} else {
+		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
+	}
 };
 
-document.querySelector('#selectX').addEventListener('click', () => {
-	selectPlayer(player_turn);
-});
-
-document.querySelector('#selectO').addEventListener('click', () => {
-	selectPlayer(AI_turn);
-});
-
-document.querySelector('#reset').addEventListener('click', () => {
-	game = new Array(9);
-  disableX.disabled=false;
-  disableO.disabled=false;
-	document.querySelector("#line").className = '';
-	document.querySelector("#line").classList.add('d-none');
-	cell.forEach((el) => {
-		el.innerHTML = '';
-		el.setAttribute('data-mark', '')
-	});
-	document.querySelector('#result').innerHTML = '';
-	showButtons();
-})
-
+//TODO add this to retry button
+// document.querySelector('#reset').addEventListener('click', () => {
+// 	game = new Array(9);
+//   disableX.disabled=false;
+//   disableO.disabled=false;
+// 	document.querySelector("#line").className = '';
+// 	document.querySelector("#line").classList.add('d-none');
+// 	cell.forEach((el) => {
+// 		el.innerHTML = '';
+// 		el.setAttribute('data-mark', '')
+// 	});
+// 	document.querySelector('#result').innerHTML = '';
+// })
 const selectPlayer = (player) => {
 	if (player == AI_turn) {
 		player_turn = 'O';
 		AI_turn = 'X';
-    disableX.disabled=true;
+		disableX.disabled = true;
 	} else {
 		player_turn = 'X';
 		AI_turn = 'O';
-    disableO.disabled=true;
+		disableO.disabled = true;
 	}
 };
 
@@ -118,39 +104,39 @@ const emptyCells = (gameCurrent) => {
 	return empty;
 }
 const findWinningMove = (gameCurrent, player) => {
-    let empty = emptyCells(gameCurrent);
-    for (let i = 0; i < empty.length; i++) {
-        let testBoard = [...gameCurrent];
-        testBoard[empty[i]] = player;
-        if (checkWinner(testBoard, player)) {
-            return empty[i];
-        }
-    }
-    return -1;
+	let empty = emptyCells(gameCurrent);
+	for (let i = 0; i < empty.length; i++) {
+		let testBoard = [...gameCurrent];
+		testBoard[empty[i]] = player;
+		if (checkWinner(testBoard, player)) {
+			return empty[i];
+		}
+	}
+	return -1;
 };
 
 const computer = () => {
-    let empty = emptyCells(game);
-    if (empty.length > 0) {
-        // First priority: Win if possible
-        const winningMove = findWinningMove(game, AI_turn);
-        if (winningMove !== -1) {
-            mark(cell[winningMove], AI_turn);
-            return;
-        }
+	let empty = emptyCells(game);
+	if (empty.length > 0) {
+		// First priority: Win if possible
+		const winningMove = findWinningMove(game, AI_turn);
+		if (winningMove !== -1) {
+			mark(cell[winningMove], AI_turn);
+			return;
+		}
 
-        // Second priority: Block player's winning move
-        const blockingMove = findWinningMove(game, player_turn);
-        if (blockingMove !== -1) {
-            mark(cell[blockingMove], AI_turn);
-            return;
-        }
+		// Second priority: Block player's winning move
+		const blockingMove = findWinningMove(game, player_turn);
+		if (blockingMove !== -1) {
+			mark(cell[blockingMove], AI_turn);
+			return;
+		}
 
-        // If no strategic moves, make a random move
-        const randomIndex = Math.floor(Math.random() * empty.length);
-        const moveIndex = empty[randomIndex];
-        mark(cell[moveIndex], AI_turn);
-    }
+		// If no strategic moves, make a random move
+		const randomIndex = Math.floor(Math.random() * empty.length);
+		const moveIndex = empty[randomIndex];
+		mark(cell[moveIndex], AI_turn);
+	}
 };
 
 const checkWinner = (gameCurrent, player) => {
@@ -173,19 +159,5 @@ const findPosition = (array, value) => {
 	}
 	return positions;
 }
-
-const showButtons = (show = true) => {
-	if (show) {
-		document.querySelector('#selectO').classList.remove('d-none');
-		document.querySelector('#selectX').classList.remove('d-none');
-		return;
-	}
-
-	document.querySelector('#selectO').classList.add('d-none');
-	document.querySelector('#selectX').classList.add('d-none');
-}
-
-
-	
 
 init();

@@ -41,66 +41,6 @@ body {
     cursor: pointer;
 }
 
-#selectX {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 600px;
-    left: 500px;
-    border-radius: 10px;
-    font-size: 40px;
-    font: bold;
-    cursor: pointer;
-
-}
-
-#selectX:focus {
-    background-color: gray;
-}
-
-#selectO {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 600px;
-    right: 650px;
-    border-radius: 10px;
-    font-size: 40px;
-    font: bold;
-    cursor: pointer;
-}
-
-#selectO:focus {
-    background-color: gray;
-}
-
-
-#reset {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 600px;
-    right: 500px;
-    border-radius: 10px;
-    font-size: 40px;
-    font: bold;
-    cursor: pointer;
-}
-
-#reset:focus {
-    background-color: gray;
-}
-
-#retry {
-    position: absolute;
-    color: aqua;
-    height: 100px;
-    width: 100px;
-
-}
 #end-screen{
     position: absolute;
     height: 100vh;

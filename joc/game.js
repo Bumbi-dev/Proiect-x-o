@@ -6,10 +6,6 @@ const cell = document.querySelectorAll('.cell');
 let player_turn = 'X';
 let AI_turn = 'O';
 
-var disableX = document.getElementById("selectX");
-
-var disableO = document.getElementById("selectO");
-
 const winningCombinations = [
 	{ 'combination': [0, 1, 2], 'lineClass': 'line-horizontal-top' },
 	{ 'combination': [3, 4, 5], 'lineClass': 'line-horizontal-center' },
@@ -59,7 +55,6 @@ const checkGameEnd = () => {
 };
 
 const mark = (el, player) => {
-    showButtons(false);
     if (!isChecked(el)) {
         el.innerHTML = player;
 		el.setAttribute('data-mark', player)
@@ -72,27 +67,19 @@ const mark = (el, player) => {
     }
 };
 
-document.querySelector('#selectX').addEventListener('click', () => {
-	selectPlayer(player_turn);
-});
-
-document.querySelector('#selectO').addEventListener('click', () => {
-	selectPlayer(AI_turn);
-});
-
-document.querySelector('#reset').addEventListener('click', () => {
-	game = new Array(9);
-  disableX.disabled=false;
-  disableO.disabled=false;
-	document.querySelector("#line").className = '';
-	document.querySelector("#line").classList.add('d-none');
-	cell.forEach((el) => {
-		el.innerHTML = '';
-		el.setAttribute('data-mark', '')
-	});
-	document.querySelector('#result').innerHTML = '';
-	showButtons();
-})
+//TODO add this to retry button
+// document.querySelector('#reset').addEventListener('click', () => {
+// 	game = new Array(9);
+//   disableX.disabled=false;
+//   disableO.disabled=false;
+// 	document.querySelector("#line").className = '';
+// 	document.querySelector("#line").classList.add('d-none');
+// 	cell.forEach((el) => {
+// 		el.innerHTML = '';
+// 		el.setAttribute('data-mark', '')
+// 	});
+// 	document.querySelector('#result').innerHTML = '';
+// })
 
 const selectPlayer = (player) => {
 	if (player == AI_turn) {
@@ -145,17 +132,6 @@ const findPosition = (array, value) => {
 		}
 	}
 	return positions;
-}
-
-const showButtons = (show = true) => {
-	if (show) {
-		document.querySelector('#selectO').classList.remove('d-none');
-		document.querySelector('#selectX').classList.remove('d-none');
-		return;
-	}
-
-	document.querySelector('#selectO').classList.add('d-none');
-	document.querySelector('#selectX').classList.add('d-none');
 }
 
 const miniMax = (gameCurrent, player, depth) => {
