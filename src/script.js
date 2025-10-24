@@ -15,5 +15,5 @@ function submit() {
     if(ManaD.checked)
         DB.sendPersonalData(Nume.value, "Dreapta")
 
-    location.href="../joc/game2.html"
+    location.href="../joc/game.html"
 }
