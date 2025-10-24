@@ -8,7 +8,7 @@ var ManaD= document.getElementById ("mana-dreapta")
 
 function submit() {
     if (Nume.value == "")
-        return;
+        return;//TODO afisare eroare
 
     if(ManaS.checked)
         DB.sendPersonalData(Nume.value, "Stanga")

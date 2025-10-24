@@ -50,6 +50,7 @@ const init = () => {
 	});
 };
 
+//TODO show retry or next level button
 const checkGameEnd = () => {
 	let result = '';
 	let line = '';
@@ -83,8 +84,6 @@ const mark = (el, player) => {
 //TODO add this to retry button
 // document.querySelector('#reset').addEventListener('click', () => {
 // 	game = new Array(9);
-//   disableX.disabled=false;
-//   disableO.disabled=false;
 // 	document.querySelector("#line").className = '';
 // 	document.querySelector("#line").classList.add('d-none');
 // 	cell.forEach((el) => {
@@ -98,11 +97,9 @@ const selectPlayer = (player) => {
 	if (player == AI_turn) {
 		player_turn = 'O';
 		AI_turn = 'X';
-		disableX.disabled = true;
 	} else {
 		player_turn = 'X';
 		AI_turn = 'O';
-		disableO.disabled = true;
 	}
 };
 
@@ -251,5 +248,10 @@ const computerAvarage = () => {
 		mark(cell[moveIndex], AI_turn);
 	}
 };
+
+function nextLevel() {
+	AILevel++;
+	document.getElementById('css').getAnimations('href') = "game2.css"gi
+}
 
 init();
