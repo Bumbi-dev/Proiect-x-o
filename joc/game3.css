@@ -16,7 +16,6 @@ body {
     height: 400px;
     width: 400px;
     position: absolute;
-    top: 130px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
