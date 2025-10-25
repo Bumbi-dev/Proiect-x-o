@@ -27,6 +27,13 @@ body {
     overflow: hidden;
 }
 
+@media (max-width: 768px) {
+  #careu {
+    height: 80vw;
+    width: 80vw;
+  }
+}
+
 .cell {
     background: #ffffff;
     color: black;
