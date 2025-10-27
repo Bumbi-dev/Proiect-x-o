@@ -42,22 +42,34 @@ const init = () => {
 };
 
 const checkGameEnd = () => {
-	let result='';
-	let line = '';
-	if (checkWinner(game, player_turn)) {
-		result = `A castigat jucatorul cu ${player_turn}`;
-		line = classLine;
-		document.querySelector("#line").className = classLine;
-	} else if (checkWinner(game, AI_turn)) {
-		line = classLine;
-		result = `A castigat AI-ul cu ${AI_turn}`;
-	} else if (emptyCells(game).length === 0) {
-		result = 'Egalitate!';
-	}
-	document.querySelector("#line").className = line;
-	document.querySelector('#result').innerHTML = result;
-};
+    let result = '';
+    let line = '';
+    let playerWon = false;
 
+    if (checkWinner(game, player_turn)) {
+        result = `Ai castigat! (${player_turn})`;
+        line = classLine;
+        playerWon = true;
+    } else if (checkWinner(game, AI_turn)) {
+        result = `Ai pierdut! (${AI_turn})`;
+        line = classLine;
+    } else if (emptyCells(game).length === 0) {
+        result = 'Egalitate!';
+    } else {
+        // game still ongoing
+        return;
+    }
+
+    document.querySelector("#line").className = line;
+    document.querySelector('#result').innerHTML = result;
+
+    if (window.showResultModal) {
+        window.showResultModal(result, playerWon);
+    } else {
+        // fallback if modal script isn't loaded
+        alert(result);
+    }
+};
 const mark = (el, player) => {
     showButtons(false);
     if (!isChecked(el)) {

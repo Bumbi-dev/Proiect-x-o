@@ -42,20 +42,33 @@ const init = () => {
 };
 
 const checkGameEnd = () => {
-	let result='';
-	let line = '';
-	if (checkWinner(game, player_turn)) {
-		result = `A castigat jucatorul cu ${player_turn}`;
-		line = classLine;
-		document.querySelector("#line").className = classLine;
-	} else if (checkWinner(game, AI_turn)) {
-		line = classLine;
-		result = `A castigat AI-ul cu ${AI_turn}`;
-	} else if (emptyCells(game).length === 0) {
-		result = 'Egalitate!';
-	}
-	document.querySelector("#line").className = line;
-	document.querySelector('#result').innerHTML = result;
+    let result = '';
+    let line = '';
+    let playerWon = false;
+
+    if (checkWinner(game, player_turn)) {
+        result = `Ai castigat! (${player_turn})`;
+        line = classLine;
+        playerWon = true;
+    } else if (checkWinner(game, AI_turn)) {
+        result = `Ai pierdut! (${AI_turn})`;
+        line = classLine;
+    } else if (emptyCells(game).length === 0) {
+        result = 'Egalitate!';
+    } else {
+        // game still ongoing
+        return;
+    }
+
+    document.querySelector("#line").className = line;
+    document.querySelector('#result').innerHTML = result;
+
+    if (window.showResultModal) {
+        window.showResultModal(result, playerWon);
+    } else {
+        // fallback if modal script isn't loaded
+        alert(result);
+    }
 };
 
 const mark = (el, player) => {
@@ -118,12 +131,15 @@ const emptyCells = (gameCurrent) => {
 	return empty;
 }
 
+
 const computer = () => {
-	let empty = emptyCells(game);
-	if (empty.length > 0) {
-		let bestMove = miniMax(game, AI_turn, empty.length);
-		mark(cell[bestMove.index], AI_turn);
-	}
+    let empty = emptyCells(game);
+    if (empty.length > 0) {
+        // Pick a random empty cell
+        const randomIndex = Math.floor(Math.random() * empty.length);
+        const moveIndex = empty[randomIndex];
+        mark(cell[moveIndex], AI_turn);
+    }
 }
 
 const checkWinner = (gameCurrent, player) => {
@@ -158,63 +174,7 @@ const showButtons = (show = true) => {
 	document.querySelector('#selectX').classList.add('d-none');
 }
 
-const miniMax = (gameCurrent, player, depth) => {
-	const min = (a, b) => {
-		return a < b ? a : b;
-	}
+
 	
-	const max = (a, b) => {
-		return a > b ? a : b;
-	}
-
-    let empty = emptyCells(gameCurrent);
-
-    if (checkWinner(gameCurrent, player_turn)) {
-        return { score: -1 };
-    }
-    if (checkWinner(gameCurrent, AI_turn)) {
-        return { score: 1 };
-    }
-    if (empty.length === 0 || depth === 0) {
-        return { score: 0 };
-    }
-    
-    depth--;
-
-    let movePossibles = [];
-
-    for (let i = 0; i < empty.length; i++) {
-        let move = {};
-        move.index = empty[i];
-
-        let newGame = gameCurrent.slice();
-        newGame[empty[i]] = player;
-
-		let result = miniMax(newGame, player === AI_turn ? player_turn : AI_turn, depth);
-        move.score = result.score;
-        movePossibles.push(move);
-    }
-
-	let bestMove;	
-    if (player === AI_turn) {
-        bestScore = -Infinity;
-        for (let i = 0; i < movePossibles.length; i++) {
-            bestScore = max(bestScore, movePossibles[i].score);
-            if (movePossibles[i].score === bestScore) {
-				bestMove = i;
-            }
-        }
-    } else {
-        bestScore = Infinity;
-        for (let i = 0; i < movePossibles.length; i++) {
-            bestScore = min(bestScore, movePossibles[i].score);
-            if (movePossibles[i].score === bestScore) {
-				bestMove = i;
-            }
-        }
-    }
-
-    return movePossibles[bestMove];
-}
 
 init();
