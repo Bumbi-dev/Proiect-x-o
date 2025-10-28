@@ -48,58 +48,57 @@ const init = () => {
 		});
 		el.setAttribute('data-cell', i);
 	});
+
+	animateBouncers();
 };
 
 //TODO show retry or next level button
 const checkGameEnd = () => {
-	let result = '';
-	let line = '';
-	if (checkWinner(game, player_turn)) {
-		result = `A castigat jucatorul cu ${player_turn}`;
-		line = classLine;
-		document.querySelector("#line").className = classLine;
-	} else if (checkWinner(game, AI_turn)) {
-		line = classLine;
-		result = `A castigat AI-ul cu ${AI_turn}`;
-	} else if (emptyCells(game).length === 0) {
-		result = 'Egalitate!';
-	}
-	document.querySelector("#line").className = line;
-	document.querySelector('#result').innerHTML = result;
+    let result = '';
+    // let playerWon = false;
+
+    if (checkWinner(game, player_turn)) {
+		//showNextLevelButton(`Ai castigat! (${player_turn})`);
+    } else if (checkWinner(game, AI_turn)) {
+		//showRetryButton(`AI a castigat! (${AI_turn})`);
+    } else if (emptyCells(game).length === 0) {
+		//showRetryButton('Egalitate!');
+    } else {
+        return;// game still going
+    }
+
+    // if (window.showResultModal) {
+    //     window.showResultModal(result, playerWon);
+    // } else {
+    //     alert(result);
+    // }
 };
+
+function showNextLevelButton(result) {
+	//blureaza ecranu
+	document.getElementById("body").style.backgroundImage = "url('../res/xsig2.png')";
+
+	document.getElementById("next_level").style.display = "block";
+
+	//TODO display result msg
+}
+
+function showRetryButton(result) {
+	//blureaza ecranu
+	document.getElementById("body").style.backgroundImage = "url('../res/xsig2.png')";
+
+	document.getElementById("retry").style.display = "block";
+
+	//TODO display result msg
+}
 
 const mark = (el, player) => {
 	if (!isChecked(el)) {
 		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
 		game[parseInt(el.getAttribute('data-cell'))] = player;
-		if (checkWinner(game, player)) {
-			document.querySelector("#line").classList.remove('d-none');
-		}
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
-	}
-};
-
-//TODO add this to retry button
-// document.querySelector('#reset').addEventListener('click', () => {
-// 	game = new Array(9);
-// 	document.querySelector("#line").className = '';
-// 	document.querySelector("#line").classList.add('d-none');
-// 	cell.forEach((el) => {
-// 		el.innerHTML = '';
-// 		el.setAttribute('data-mark', '')
-// 	});
-// 	document.querySelector('#result').innerHTML = '';
-// })
-
-const selectPlayer = (player) => {
-	if (player == AI_turn) {
-		player_turn = 'O';
-		AI_turn = 'X';
-	} else {
-		player_turn = 'X';
-		AI_turn = 'O';
 	}
 };
 
@@ -115,6 +114,41 @@ const emptyCells = (gameCurrent) => {
 	return empty;
 }
 
+//AIs
+const computerNoob = () => {
+	let empty = emptyCells(game);
+	if (empty.length > 0) {
+		// Pick a random empty cell
+		const randomIndex = Math.floor(Math.random() * empty.length);
+		const moveIndex = empty[randomIndex];
+		mark(cell[moveIndex], AI_turn);
+	}
+}
+
+const computerAvarage = () => {
+	let empty = emptyCells(game);
+	if (empty.length > 0) {
+		// First priority: Win if possible
+		const winningMove = findWinningMove(game, AI_turn);
+		if (winningMove !== -1) {
+			mark(cell[winningMove], AI_turn);
+			return;
+		}
+
+		// Second priority: Block player's winning move
+		const blockingMove = findWinningMove(game, player_turn);
+		if (blockingMove !== -1) {
+			mark(cell[blockingMove], AI_turn);
+			return;
+		}
+
+		// If no strategic moves, make a random move
+		const randomIndex = Math.floor(Math.random() * empty.length);
+		const moveIndex = empty[randomIndex];
+		mark(cell[moveIndex], AI_turn);
+	}
+};
+
 const computerBoss = () => {
 	let empty = emptyCells(game);
 	if (empty.length > 0) {
@@ -123,26 +157,18 @@ const computerBoss = () => {
 	}
 }
 
-const checkWinner = (gameCurrent, player) => {
-	let pos = findPosition(gameCurrent, player);
-	for (let i = 0; i < winningCombinations.length; i++) {
-		if (winningCombinations[i].combination.every(item => pos.includes(item))) {
-			classLine = winningCombinations[i].lineClass;
-			return true;
+//Algorithms and functions for AIs
+const findWinningMove = (gameCurrent, player) => {
+	let empty = emptyCells(gameCurrent);
+	for (let i = 0; i < empty.length; i++) {
+		let testBoard = [...gameCurrent];
+		testBoard[empty[i]] = player;
+		if (checkWinner(testBoard, player)) {
+			return empty[i];
 		}
 	}
-	return false;
-}
-
-const findPosition = (array, value) => {
-	const positions = [];
-	for (let i = 0; i < array.length; i++) {
-		if (array[i] === value) {
-			positions.push(i);
-		}
-	}
-	return positions;
-}
+	return -1;
+};
 
 const miniMax = (gameCurrent, player, depth) => {
 	const min = (a, b) => {
@@ -203,61 +229,33 @@ const miniMax = (gameCurrent, player, depth) => {
 	return movePossibles[bestMove];
 }
 
-const computerNoob = () => {
-	let empty = emptyCells(game);
-	if (empty.length > 0) {
-		// Pick a random empty cell
-		const randomIndex = Math.floor(Math.random() * empty.length);
-		const moveIndex = empty[randomIndex];
-		mark(cell[moveIndex], AI_turn);
-	}
-}
-
-const findWinningMove = (gameCurrent, player) => {
-	let empty = emptyCells(gameCurrent);
-	for (let i = 0; i < empty.length; i++) {
-		let testBoard = [...gameCurrent];
-		testBoard[empty[i]] = player;
-		if (checkWinner(testBoard, player)) {
-			return empty[i];
-		}
-	}
-	return -1;
-};
-
-const computerAvarage = () => {
-	let empty = emptyCells(game);
-	if (empty.length > 0) {
-		// First priority: Win if possible
-		const winningMove = findWinningMove(game, AI_turn);
-		if (winningMove !== -1) {
-			mark(cell[winningMove], AI_turn);
-			return;
-		}
-
-		// Second priority: Block player's winning move
-		const blockingMove = findWinningMove(game, player_turn);
-		if (blockingMove !== -1) {
-			mark(cell[blockingMove], AI_turn);
-			return;
-		}
-
-		// If no strategic moves, make a random move
-		const randomIndex = Math.floor(Math.random() * empty.length);
-		const moveIndex = empty[randomIndex];
-		mark(cell[moveIndex], AI_turn);
-	}
-};
-
 function nextLevel() {
 	AILevel++;
 	document.getElementById('css').getAnimations('href') = "game2.css"
 }
 
-init();
+const checkWinner = (gameCurrent, player) => {
+	let pos = findPosition(gameCurrent, player);
+	for (let i = 0; i < winningCombinations.length; i++) {
+		if (winningCombinations[i].combination.every(item => pos.includes(item))) {
+			classLine = winningCombinations[i].lineClass;
+			return true;
+		}
+	}
+	return false;
+}
 
+const findPosition = (array, value) => {
+	const positions = [];
+	for (let i = 0; i < array.length; i++) {
+		if (array[i] === value) {
+			positions.push(i);
+		}
+	}
+	return positions;
+}
 
-
+//UI animation
 const bouncers = [
   {el: document.getElementById('bouncerX'), x: 100, y: 100, dx: 3, dy: 3},
   {el: document.getElementById('bouncerO'), x: 300, y: 200, dx: 2, dy: 2}
@@ -275,7 +273,6 @@ function animateBouncers() {
 
     const padding = 2;
 
-    
     if (obj.x + rect.width >= width - padding) {
       obj.x = width - rect.width - padding; 
       obj.dx *= -1;
@@ -285,7 +282,6 @@ function animateBouncers() {
       obj.dx *= -1;
     }
 
-    
     if (obj.y + rect.height >= height - padding) {
       obj.y = height - rect.height - padding; 
       obj.dy *= -1;
@@ -302,4 +298,4 @@ function animateBouncers() {
   requestAnimationFrame(animateBouncers);
 }
 
-animateBouncers();
+init();
