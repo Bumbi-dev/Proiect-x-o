@@ -55,28 +55,27 @@ const init = () => {
 };
 
 const checkGameEnd = () => {
-    let result = '';
-    // let playerWon = false;
-	
-    if (checkWinner(game, player_turn)) {
-		nextLevel();
-		//TODO showNextLevelButton(`Ai castigat! (${player_turn})`);
-    } else if (checkWinner(game, AI_turn)) {
-		resetCareu();
-		//TODO showRetryButton(`AI a castigat! (${AI_turn})`);
-    } else if (emptyCells(game).length === 0) {
-		resetCareu();
-		//TODO showRetryButton('Egalitate!');
-    } else {
-        return;
-    }
+	let result = '';
+	// let playerWon = false;
 
-    // if (window.showResultModal) {
-    //     window.showResultModal(result, playerWon);
-    // } else {
-    //     alert(result);
-    // }
+	if (checkWinner(game, player_turn)) {
+		showNextLevelButton(`Ai castigat! (${player_turn})`);
+	} else if (checkWinner(game, AI_turn)) {
+		showRetryButton(`AI a castigat! (${AI_turn})`);
+	} else if (emptyCells(game).length === 0) {
+		showRetryButton('Egalitate!');
+	} else {
+		return;
+	}
+
+	// if (window.showResultModal) {
+	//     window.showResultModal(result, playerWon);
+	// } else {
+	//     alert(result);
+	// }
 };
+
+document.getElementById("next_level").addEventListener("click", nextLevel)
 
 function nextLevel() {
 	DB.queueUpdateGameData(AILevel, 'w');
@@ -85,12 +84,24 @@ function nextLevel() {
 	switch (AILevel) {
 		case 2:
 			document.getElementById('scrolling-bg').style.backgroundImage = "url('../res/second_level.png')";
+			document.querySelectorAll(".bouncer").forEach(el => {
+				el.style.color = "#000000ff";
+			});
 			break;
 		case 3:
 			document.getElementById('scrolling-bg').style.backgroundImage = "url('../res/third_level.png')";
+			document.querySelectorAll(".bouncer").forEach(el => {
+				el.style.color = "#153dac";
+			});
+
 			break;
 	}
+	document.getElementById("next_level").style.display = "none";
+
+	document.getElementById("blur").style.display = "none";
 }
+
+document.getElementById("retry").addEventListener("click", resetCareu)
 
 function resetCareu() {
 	game = new Array(9);
@@ -100,22 +111,28 @@ function resetCareu() {
 	}
 
 	DB.queueUpdateGameData(AILevel, 0);
+
+	document.getElementById("retry").style.display = "none";
+	document.getElementById("blur").style.display = "none";
 }
 
 function showNextLevelButton(result) {
 	//blureaza ecranu
-	document.getElementById("body").style.backgroundImage = "url('../res/xsig2.png')";
 
-	document.getElementById("next_level").style.display = "block";
+
+	document.getElementById("next_level").style.display = "flex";
+
+	document.getElementById("blur").style.display = "block";
 
 	//TODO display result msg
 }
 
 function showRetryButton(result) {
 	//blureaza ecranu
-	document.getElementById("body").style.backgroundImage = "url('../res/xsig2.png')";
+	document.getElementById("retry").style.display = "flex";
 
-	document.getElementById("retry").style.display = "block";
+	document.getElementById("blur").style.display = "block";
+
 
 	//TODO display result msg
 }
@@ -128,8 +145,8 @@ const mark = (el, player) => {
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
 	}
-	
-	DB.queueUpdateGameData(AILevel, parseInt(el.getAttribute('data-cell'))+1);
+
+	DB.queueUpdateGameData(AILevel, parseInt(el.getAttribute('data-cell')) + 1);
 };
 
 const isChecked = (el) => {
@@ -283,66 +300,66 @@ const findPosition = (array, value) => {
 
 //UI animation
 const bouncers = [
-  {el: document.getElementById('bouncerX'), x: 100, y: 100, dx: 3, dy: 3},
-  {el: document.getElementById('bouncerO'), x: 300, y: 200, dx: 2, dy: 2}
+	{ el: document.getElementById('bouncerX'), x: 100, y: 100, dx: 3, dy: 3 },
+	{ el: document.getElementById('bouncerO'), x: 300, y: 200, dx: 2, dy: 2 }
 ];
 
 function animateBouncers() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+	const width = window.innerWidth;
+	const height = window.innerHeight;
 
-  bouncers.forEach(obj => {
-    const rect = obj.el.getBoundingClientRect(); 
+	bouncers.forEach(obj => {
+		const rect = obj.el.getBoundingClientRect();
 
-    obj.x += obj.dx;
-    obj.y += obj.dy;
+		obj.x += obj.dx;
+		obj.y += obj.dy;
 
-    const padding = 2;
+		const padding = 2;
 
-    if (obj.x + rect.width >= width - padding) {
-      obj.x = width - rect.width - padding; 
-      obj.dx *= -1;
-    }
-    if (obj.x <= padding) {
-      obj.x = padding;
-      obj.dx *= -1;
-    }
+		if (obj.x + rect.width >= width - padding) {
+			obj.x = width - rect.width - padding;
+			obj.dx *= -1;
+		}
+		if (obj.x <= padding) {
+			obj.x = padding;
+			obj.dx *= -1;
+		}
 
-    if (obj.y + rect.height >= height - padding) {
-      obj.y = height - rect.height - padding; 
-      obj.dy *= -1;
-    }
-    if (obj.y <= padding) {
-      obj.y = padding;
-      obj.dy *= -1;
-    }
+		if (obj.y + rect.height >= height - padding) {
+			obj.y = height - rect.height - padding;
+			obj.dy *= -1;
+		}
+		if (obj.y <= padding) {
+			obj.y = padding;
+			obj.dy *= -1;
+		}
 
-    obj.el.style.left = obj.x + 'px';
-    obj.el.style.top = obj.y + 'px';
-  });
+		obj.el.style.left = obj.x + 'px';
+		obj.el.style.top = obj.y + 'px';
+	});
 
-  requestAnimationFrame(animateBouncers);
+	requestAnimationFrame(animateBouncers);
 }
 
-window.onload = function() {
-  const bg = document.getElementById('scrolling-bg');
-  let x = 0;
-  const speed = 1; 
-  const imageWidth = window.innerWidth; 
+window.onload = function () {
+	const bg = document.getElementById('scrolling-bg');
+	let x = 0;
+	const speed = 1;
+	const imageWidth = window.innerWidth;
 
-  function animateBG() {
-    x += speed; 
+	function animateBG() {
+		x += speed;
 
-    
-    if (x >= imageWidth) {
-      x = 0;
-    }
 
-    bg.style.backgroundPosition = `${x}px 0`; 
-    requestAnimationFrame(animateBG);
-  }
+		if (x >= imageWidth) {
+			x = 0;
+		}
 
-  animateBG();
+		bg.style.backgroundPosition = `${x}px 0`;
+		requestAnimationFrame(animateBG);
+	}
+
+	animateBG();
 };
 
 init();
