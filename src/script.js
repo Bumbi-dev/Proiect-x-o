@@ -6,14 +6,14 @@ var Nume= document.getElementById ("Nume")
 var ManaS= document.getElementById ("mana-stanga")
 var ManaD= document.getElementById ("mana-dreapta")
 
-function submit() {
+async function submit() {
     if (Nume.value == "")
         return;//TODO afisare casuta nume cu rosu
 
     if(ManaS.checked)
-        DB.generateProfile(Nume.value, "Stanga")
+        await DB.generateProfile(Nume.value, "Stanga")
     if(ManaD.checked)
-        DB.generateProfile(Nume.value, "Dreapta")
+        await DB.generateProfile(Nume.value, "Dreapta")
 
     location.href="../joc/game.html"
 }

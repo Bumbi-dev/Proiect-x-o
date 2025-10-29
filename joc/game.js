@@ -49,6 +49,8 @@ const init = () => {
 		el.setAttribute('data-cell', i);
 	});
 
+	DB.queueUpdateGameData(AILevel, 0);//0 = start game
+
 	animateBouncers();
 };
 
@@ -119,13 +121,12 @@ const mark = (el, player) => {
 	if (!isChecked(el)) {
 		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
-		//TODO parseInt(el.getAttribute('data-cell')) to db
 		game[parseInt(el.getAttribute('data-cell'))] = player;
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
 	}
 	
-	DB.logGameData();
+	DB.queueUpdateGameData(AILevel, parseInt(el.getAttribute('data-cell'))+1);
 };
 
 const isChecked = (el) => {
