@@ -63,3 +63,21 @@ function animateBouncers() {
 }
 
 animateBouncers();
+
+window.onload = function() {
+  const bg = document.querySelector('.scrolling-bg');
+  let x = 0;
+  const totalWidth = window.innerWidth; 
+  const speed = 1; 
+
+  function animateBG() {
+    x -= speed;
+    if (x <= -totalWidth) x = 0; 
+    bg.style.transform = `translateX(${x}px)`;
+    requestAnimationFrame(animateBG);
+  }
+
+  animateBG();
+};
+
+

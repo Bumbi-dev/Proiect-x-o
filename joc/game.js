@@ -73,9 +73,6 @@ const mark = (el, player) => {
 		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
 		game[parseInt(el.getAttribute('data-cell'))] = player;
-		if (checkWinner(game, player)) {
-			document.querySelector("#line").classList.remove('d-none');
-		}
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
 	}
@@ -303,3 +300,24 @@ function animateBouncers() {
 }
 
 animateBouncers();
+
+window.onload = function() {
+  const bg = document.querySelector('.scrolling-bg');
+  let x = 0;
+  const speed = 1; 
+  const imageWidth = window.innerWidth; 
+
+  function animateBG() {
+    x += speed; 
+
+    
+    if (x >= imageWidth) {
+      x = 0;
+    }
+
+    bg.style.backgroundPosition = `${x}px 0`; 
+    requestAnimationFrame(animateBG);
+  }
+
+  animateBG();
+};

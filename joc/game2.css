@@ -3,7 +3,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../res/xsi0alb.png");
+    background: url("../res/background_game2.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -75,4 +75,17 @@ body {
     color: #303030;
     pointer-events: none;
     z-index: -1;
+}
+
+.scrolling-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300%;               
+  height: 100%;
+  background: url('../res/background_game2.png') repeat-x;
+  background-size: auto 100%;
+  z-index: -1;
+  transform: translateX(0);
+  will-change: transform;    
 }

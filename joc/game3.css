@@ -3,7 +3,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../res/xsi0alb.png");
+    background: url("../res/background_game.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -12,7 +12,7 @@ body {
 }
 
 #careu {
-    background: #020202;
+    background: #000000;
     height: 400px;
     width: 400px;
     position: absolute;
@@ -23,7 +23,7 @@ body {
 
     border-radius: 12px;
     border-style: groove;
-    border-color: #000000;
+    border-color: #f8f8f8;
     overflow: hidden;
 }
 
@@ -58,4 +58,26 @@ body {
     justify-content: center;
     display: flex;
     display: none;
+}
+
+.scrolling-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300%;               
+  height: 100%;
+  background: url('../res/background_game.png') repeat-x;
+  background-size: auto 100%;
+  z-index: -1;
+  transform: translateX(0);
+  will-change: transform;    
+}
+
+.bouncer {
+  position: absolute;
+  font-size: 50px;
+  font-weight: bold;
+  color: #ffffff;
+  pointer-events: none;
+  z-index: -1;
 }
