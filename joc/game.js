@@ -79,14 +79,15 @@ const checkGameEnd = () => {
 };
 
 function nextLevel() {
-	resetCareu();
+	DB.queueUpdateGameData(AILevel, 'w');
 	AILevel++;
+	resetCareu();
 	switch (AILevel) {
 		case 2:
-			document.body.style.backgroundImage = "url('../res/second_level.png')";
+			document.getElementById('scrolling-bg').style.backgroundImage = "url('../res/second_level.png')";
 			break;
 		case 3:
-			document.body.style.backgroundImage = "url('../res/third_level.png')";
+			document.getElementById('scrolling-bg').style.backgroundImage = "url('../res/third_level.png')";
 			break;
 	}
 }
@@ -97,6 +98,8 @@ function resetCareu() {
 		cell[i].innerHTML = '';
 		cell[i].removeAttribute('data-mark');
 	}
+
+	DB.queueUpdateGameData(AILevel, 0);
 }
 
 function showNextLevelButton(result) {
@@ -321,11 +324,8 @@ function animateBouncers() {
   requestAnimationFrame(animateBouncers);
 }
 
-<<<<<<< HEAD
-animateBouncers();
-
 window.onload = function() {
-  const bg = document.querySelector('.scrolling-bg');
+  const bg = document.getElementById('scrolling-bg');
   let x = 0;
   const speed = 1; 
   const imageWidth = window.innerWidth; 
@@ -344,6 +344,5 @@ window.onload = function() {
 
   animateBG();
 };
-=======
+
 init();
->>>>>>> 57e9d5f8a860a6195cc60198af0283d5581c6e67

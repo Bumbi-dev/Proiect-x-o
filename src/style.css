@@ -8,7 +8,6 @@ body {
   height: 100vh;
   overflow: hidden;
 
-  background: url("../res/background_home.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -24,7 +23,7 @@ body {
 
 @media (max-width: 768px) {
   body {
-    background: url("../res/background_game.png");
+    background: url("../res/xsi0.png");
   }
 }
 
@@ -128,24 +127,7 @@ button:hover {
   left: 0;
   width: 200%;       
   height: 100%;
-  background: url('../res/background_home.png') repeat-x;
+  background: url('../res/xsi0.png') repeat-x;
   background-size: auto 100%;
   z-index: -1;       
-}
-
-/*
-.dvd {
-  position: absolute;
-  width: 100px;
-  height: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  border-radius: 10px;
-  z-index: -1;
-  opacity: 1;
-
-  object-fit: cover;
-  clip-path: inset(0 20px 0 20px);
 }

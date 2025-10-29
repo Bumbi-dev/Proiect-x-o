@@ -3,11 +3,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-<<<<<<< HEAD
-    background: url("../res/background_game.png");
-=======
-    background: url("../res/first_level.png");
->>>>>>> 57e9d5f8a860a6195cc60198af0283d5581c6e67
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -69,21 +64,19 @@ body {
   z-index: -1;
 }
 
-<<<<<<< HEAD
-.scrolling-bg {
+#scrolling-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 300%;               
   height: 100%;
-  background: url('../res/background_home.png') repeat-x;
+  background: url('../res/xsi0.png') repeat-x;
   background-size: auto 100%;
   z-index: -1;
   transform: translateX(0);
   will-change: transform;    
 }
 
-=======
 #blur {
   position: absolute;
   height: 100vh;
@@ -93,4 +86,3 @@ body {
   z-index: 1;
   display: none;
 }
->>>>>>> 57e9d5f8a860a6195cc60198af0283d5581c6e67
