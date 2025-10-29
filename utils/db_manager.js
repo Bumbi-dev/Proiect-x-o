@@ -6,7 +6,7 @@ var anon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI
 
 const supabase = createClient(url, anon)
 
-var id;
+const getID = () => localStorage.getItem("player_id");
 
 export async function logAll() {
     const { data, error } = await supabase.from('User Data').select('*');
@@ -17,7 +17,7 @@ export async function logAll() {
 export async function logById(id) {
     const { data, error } = await supabase
         .from('User Data')
-        .eq('id', 1)
+        .eq('id', id)
         .select('*')
         .single();
 
@@ -27,30 +27,42 @@ export async function logById(id) {
     console.log(data)
 }
 
-export async function updateNameById(id, name) {
+export async function updateName(name) {
     const { data, error } = await supabase
         .from('User Data')
         .update({name: name})
-        .eq('id', 1)
+        .eq('id', getID())
         .single();
 
     if (error)
         console.error(error)
 }
 
-export async function sendPersonalData(name, hand) {
-    const { data, error } = await supabase.from('User Data').insert([{ name: name, hand: hand }]).select()
+export async function generateProfile(name, hand) {
+    if(!getID()) {
+        const { data, error } = await supabase.from('User Data').insert([{ name: name, hand: hand }]).select()
+        console.log(getID())
+    
+        localStorage.setItem("player_id", data[0].id);
+
+        if (error)
+            console.error(error)
+    }
+}
+
+export async function logGameData() {
+    const { data, error } = await supabase.from('User Data').select('*')
+
+    console.log(getID())
 
     if (error)
         console.error(error)
-
-    id = data.id;
 }
 
-//TODO update the entry using id
-export async function updateGameData(id) {
+export async function updateGameData(AILevel, move) {
     const { data, error } = await supabase.from('User Data').select('*')
 
+    
     if (error)
         console.error(error)
 }

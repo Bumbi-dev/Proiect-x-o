@@ -8,12 +8,12 @@ var ManaD= document.getElementById ("mana-dreapta")
 
 function submit() {
     if (Nume.value == "")
-        return;//TODO afisare eroare
+        return;//TODO afisare casuta nume cu rosu
 
     if(ManaS.checked)
-        DB.sendPersonalData(Nume.value, "Stanga")
+        DB.generateProfile(Nume.value, "Stanga")
     if(ManaD.checked)
-        DB.sendPersonalData(Nume.value, "Dreapta")
+        DB.generateProfile(Nume.value, "Dreapta")
 
     location.href="../joc/game.html"
 }

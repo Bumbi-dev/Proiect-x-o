@@ -1,4 +1,4 @@
-// import * as DB from '../utils/db_manager.js';
+import * as DB from '../utils/db_manager.js';
 
 let game = new Array(9);
 let classLine = '';
@@ -52,19 +52,21 @@ const init = () => {
 	animateBouncers();
 };
 
-//TODO show retry or next level button
 const checkGameEnd = () => {
     let result = '';
     // let playerWon = false;
-
+	
     if (checkWinner(game, player_turn)) {
-		//showNextLevelButton(`Ai castigat! (${player_turn})`);
+		nextLevel();
+		//TODO showNextLevelButton(`Ai castigat! (${player_turn})`);
     } else if (checkWinner(game, AI_turn)) {
-		//showRetryButton(`AI a castigat! (${AI_turn})`);
+		resetCareu();
+		//TODO showRetryButton(`AI a castigat! (${AI_turn})`);
     } else if (emptyCells(game).length === 0) {
-		//showRetryButton('Egalitate!');
+		resetCareu();
+		//TODO showRetryButton('Egalitate!');
     } else {
-        return;// game still going
+        return;
     }
 
     // if (window.showResultModal) {
@@ -73,6 +75,27 @@ const checkGameEnd = () => {
     //     alert(result);
     // }
 };
+
+function nextLevel() {
+	resetCareu();
+	AILevel++;
+	switch (AILevel) {
+		case 2:
+			document.body.style.backgroundImage = "url('../res/second_level.png')";
+			break;
+		case 3:
+			document.body.style.backgroundImage = "url('../res/third_level.png')";
+			break;
+	}
+}
+
+function resetCareu() {
+	game = new Array(9);
+	for (let i = 0; i < cell.length; i++) {
+		cell[i].innerHTML = '';
+		cell[i].removeAttribute('data-mark');
+	}
+}
 
 function showNextLevelButton(result) {
 	//blureaza ecranu
@@ -96,10 +119,13 @@ const mark = (el, player) => {
 	if (!isChecked(el)) {
 		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
+		//TODO parseInt(el.getAttribute('data-cell')) to db
 		game[parseInt(el.getAttribute('data-cell'))] = player;
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
 	}
+	
+	DB.logGameData();
 };
 
 const isChecked = (el) => {
@@ -170,6 +196,7 @@ const findWinningMove = (gameCurrent, player) => {
 	return -1;
 };
 
+var bestScore;
 const miniMax = (gameCurrent, player, depth) => {
 	const min = (a, b) => {
 		return a < b ? a : b;
@@ -227,11 +254,6 @@ const miniMax = (gameCurrent, player, depth) => {
 	}
 
 	return movePossibles[bestMove];
-}
-
-function nextLevel() {
-	AILevel++;
-	document.getElementById('css').getAnimations('href') = "game2.css"
 }
 
 const checkWinner = (gameCurrent, player) => {
