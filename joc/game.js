@@ -59,6 +59,7 @@ const checkGameEnd = () => {
 	// let playerWon = false;
 
 	if (checkWinner(game, player_turn)) {
+		celebrateWin();
 		showNextLevelButton(`Ai castigat! (${player_turn})`);
 	} else if (checkWinner(game, AI_turn)) {
 		showRetryButton(`AI a castigat! (${AI_turn})`);
@@ -90,6 +91,9 @@ function nextLevel() {
 			break;
 		case 3:
 			document.getElementById('scrolling-bg').style.backgroundImage = "url('../res/third_level.png')";
+			document.querySelectorAll('.cell').forEach(cell => {
+				cell.style.background = '#153dac';
+			});
 			document.querySelectorAll(".bouncer").forEach(el => {
 				el.style.color = "#153dac";
 			});
@@ -363,3 +367,32 @@ window.onload = function () {
 };
 
 init();
+
+
+function celebrateWin() {
+  confetti({
+    particleCount: 150,
+    spread: 90,
+    origin: { y: 0.7 }
+  });
+
+
+  const duration = 1000;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 5,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 }
+    });
+    confetti({
+      particleCount: 5,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 }
+    });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+}

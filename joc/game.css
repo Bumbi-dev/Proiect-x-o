@@ -100,6 +100,7 @@ body {
   border: 2px solid #ffffff;
   box-shadow: 0 0 15px rgb(255, 255, 255);
   z-index: 2;
+  font-size: 24px;
 }
 
 #next_level{
@@ -115,4 +116,30 @@ body {
   border: 2px solid #ffffff;
   box-shadow: 0 0 15px rgb(255, 255, 255);
   z-index: 2;
+  font-size: 24px;
+}
+button {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #111, 0 6px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.15s ease-in-out;
+}
+
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 #111, 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+
+button:active {
+  transform: translateY(4px) scale(0.96);
+  box-shadow: 0 2px 0 #111, 0 2px 6px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(145deg, #1a1a1a, #0e0e0e);
 }
