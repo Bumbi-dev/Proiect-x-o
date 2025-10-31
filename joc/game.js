@@ -59,27 +59,23 @@ const checkGameEnd = () => {
 	// let playerWon = false;
 
 	if (checkWinner(game, player_turn)) {
+		DB.queueUpdateGameData(AILevel, 'W');
 		celebrateWin();
 		showNextLevelButton(`Ai castigat! (${player_turn})`);
 	} else if (checkWinner(game, AI_turn)) {
+		DB.queueUpdateGameData(AILevel, 'L');
 		showRetryButton(`AI a castigat! (${AI_turn})`);
 	} else if (emptyCells(game).length === 0) {
+		DB.queueUpdateGameData(AILevel, 'E');
 		showRetryButton('Egalitate!');
 	} else {
 		return;
 	}
-
-	// if (window.showResultModal) {
-	//     window.showResultModal(result, playerWon);
-	// } else {
-	//     alert(result);
-	// }
 };
 
 document.getElementById("next_level").addEventListener("click", nextLevel)
 
 function nextLevel() {
-	DB.queueUpdateGameData(AILevel, 'w');
 	AILevel++;
 	resetCareu();
 	switch (AILevel) {
@@ -353,7 +349,6 @@ window.onload = function () {
 
 	function animateBG() {
 		x += speed;
-
 
 		if (x >= imageWidth) {
 			x = 0;
