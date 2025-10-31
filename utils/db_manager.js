@@ -8,8 +8,11 @@ const supabase = createClient(url, anon)
 
 const getID = () => localStorage.getItem("player_id");
 
-export async function generateProfile(name, hand) {
+const getDataConsent = () => localStorage.getItem("data_consent") === "yes";
 
+export async function generateProfile(name, hand) {
+    if (!getDataConsent())
+        return;
     //If a profile was already created
     if (getID()) {
         const { data, error } = await supabase
@@ -46,6 +49,9 @@ export function queueUpdateGameData(AILevel, move) {
 }
 
 export async function updateGameData(AILevel, move) {
+    if (!getDataConsent())
+        return;
+    
     let level = `game_${AILevel}`;
 
     const { data, error } = await supabase
