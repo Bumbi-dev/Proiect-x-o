@@ -89,8 +89,22 @@ body {
 }
 
 #retry{
-  color:  rgb(255, 255, 255);
   display: none;
+  z-index: 2;
+  flex-direction: column;
+}
+
+#retry-text{
+  display: flex;
+  color: rgb(255, 255, 255);
+  font-size: 24px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+#retry-button{
+  color:rgb(255, 255, 255);
+  display: block;
   flex-direction: column;
   gap: 10px;
   background: #1e1e1e;
@@ -100,7 +114,6 @@ body {
   width: 315px;
   border: 2px solid #ffffff;
   box-shadow: 0 0 15px rgb(255, 255, 255);
-  z-index: 2;
   font-size: 24px;
 }
 

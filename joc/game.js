@@ -56,15 +56,14 @@ const init = () => {
 
 const checkGameEnd = () => {
 	let result = '';
-	// let playerWon = false;
 
 	if (checkWinner(game, player_turn)) {
 		DB.queueUpdateGameData(AILevel, 'W');
 		celebrateWin();
-		showNextLevelButton(`Ai castigat! (${player_turn})`);
+		showNextLevelButton();
 	} else if (checkWinner(game, AI_turn)) {
 		DB.queueUpdateGameData(AILevel, 'L');
-		showRetryButton(`AI a castigat! (${AI_turn})`);
+		showRetryButton('Ai a pierdut!');
 	} else if (emptyCells(game).length === 0) {
 		DB.queueUpdateGameData(AILevel, 'E');
 		showRetryButton('Egalitate!');
@@ -121,7 +120,8 @@ function showNextLevelButton() {
 	document.getElementById("blur").style.display = "block";
 }
 
-function showRetryButton() {
+function showRetryButton(result) {
+	document.getElementById("retry-text").innerText = result;	
 	document.getElementById("retry").style.display = "flex";
 	document.getElementById("blur").style.display = "block";
 }
@@ -131,6 +131,10 @@ const mark = (el, player) => {
 		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
 		game[parseInt(el.getAttribute('data-cell'))] = player;
+
+		console.log('sa marcat')
+		console.log(parseInt(el.getAttribute('data-cell')))
+		
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
 	}
@@ -351,7 +355,6 @@ window.onload = function () {
 };
 
 init();
-
 
 function celebrateWin() {
   confetti({
