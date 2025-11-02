@@ -1,0 +1,11 @@
+{
+  "name": "your-game-name",
+  "version": "1.0.0",
+  "description": "A game that connects to Supabase",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  }
+}
