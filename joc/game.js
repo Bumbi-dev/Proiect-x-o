@@ -116,25 +116,14 @@ function resetCareu() {
 	document.getElementById("blur").style.display = "none";
 }
 
-function showNextLevelButton(result) {
-	//blureaza ecranu
-
-
+function showNextLevelButton() {
 	document.getElementById("next_level").style.display = "flex";
-
 	document.getElementById("blur").style.display = "block";
-
-	//TODO display result msg
 }
 
-function showRetryButton(result) {
-	//blureaza ecranu
+function showRetryButton() {
 	document.getElementById("retry").style.display = "flex";
-
 	document.getElementById("blur").style.display = "block";
-
-
-	//TODO display result msg
 }
 
 const mark = (el, player) => {

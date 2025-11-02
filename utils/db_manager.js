@@ -1,8 +1,8 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 //TODO change these to environment variables in render
-var url = "https://vusnehluabjnecixaoee.supabase.co"
-var anon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1c25laGx1YWJqbmVjaXhhb2VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5MjQ1OTIsImV4cCI6MjA3NjUwMDU5Mn0.ZJ0rxiMM5CqSvE7WypjJxm-ySeHv7zqKkU2YR6T6xQw'
+var url = "db_url"
+var anon = "anon_key"
 
 const supabase = createClient(url, anon)
 

@@ -1,5 +1,6 @@
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
+    user-select: none;
     display: flex;
     justify-content: center;
     align-items: center;
