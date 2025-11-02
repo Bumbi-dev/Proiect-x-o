@@ -118,19 +118,18 @@ body {
   z-index: 2;
   font-size: 24px;
 }
+
 button {
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
   color: white;
   border: none;
   border-radius: 12px;
-  padding: 12px 24px;
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 6px 0 #111, 0 6px 12px rgba(0, 0, 0, 0.4);
   transition: all 0.15s ease-in-out;
 }
-
 
 button:hover {
   transform: translateY(-2px);
