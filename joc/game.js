@@ -43,7 +43,6 @@ const init = () => {
 				checkGameEnd();
 			} catch (error) {
 				console.error(error);
-				alert(error);
 			}
 		});
 		el.setAttribute('data-cell', i);
@@ -55,15 +54,16 @@ const init = () => {
 };
 
 const checkGameEnd = () => {
-	let result = '';
-
 	if (checkWinner(game, player_turn)) {
 		DB.queueUpdateGameData(AILevel, 'W');
 		celebrateWin();
 		showNextLevelButton();
 	} else if (checkWinner(game, AI_turn)) {
-		DB.queueUpdateGameData(AILevel, 'L');
-		showRetryButton('Ai a pierdut!');
+		DB.queueUpdateGameData(AILevel, 'L');	
+		if(Math.floor(Math.random() * 100 / 2) == 1)
+			showRetryButton('gg ez');
+		else
+			showRetryButton('Ai pierdut!');
 	} else if (emptyCells(game).length === 0) {
 		DB.queueUpdateGameData(AILevel, 'E');
 		showRetryButton('Egalitate!');

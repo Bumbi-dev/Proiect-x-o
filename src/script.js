@@ -7,7 +7,7 @@ var ManaS = document.getElementById("mana-stanga")
 var ManaD = document.getElementById("mana-dreapta")
 
 async function submit() {
-	if (Nume.value == "")
+	if (Nume.value == "" || (!ManaD.checked && !ManaS.checked))
 		return;//TODO afisare casuta nume cu rosu
 
 	if (ManaS.checked)
