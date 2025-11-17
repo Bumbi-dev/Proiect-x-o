@@ -8,7 +8,7 @@ var ManaD = document.getElementById("mana-dreapta")
 
 async function submit() {
 	if (Nume.value == "" || (!ManaD.checked && !ManaS.checked))
-		return;//TODO afisare casuta nume cu rosu
+		return;
 
 	if (ManaS.checked)
 		await DB.generateProfile(Nume.value, "Stanga")
@@ -95,4 +95,3 @@ window.onload = function () {
 
 	animateBG();
 };
-

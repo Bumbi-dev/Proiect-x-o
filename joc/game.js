@@ -1,7 +1,6 @@
 import * as DB from '../utils/db_manager.js';
 
 let game = new Array(9);
-let classLine = '';
 const cell = document.querySelectorAll('.cell');
 let player_turn = 'X';
 let AI_turn = 'O';
@@ -20,6 +19,8 @@ const winningCombinations = [
 ];
 
 const init = () => {
+	DB.logStuff()
+
 	cell.forEach((el, i) => {
 		el.addEventListener('click', () => {
 			try {
@@ -131,10 +132,6 @@ const mark = (el, player) => {
 		el.innerHTML = player;
 		el.setAttribute('data-mark', player)
 		game[parseInt(el.getAttribute('data-cell'))] = player;
-
-		console.log('sa marcat')
-		console.log(parseInt(el.getAttribute('data-cell')))
-		
 	} else {
 		throw new Error('Nu poti pune intr-un chenar deja ocupat!');
 	}
@@ -273,10 +270,8 @@ const miniMax = (gameCurrent, player, depth) => {
 const checkWinner = (gameCurrent, player) => {
 	let pos = findPosition(gameCurrent, player);
 	for (let i = 0; i < winningCombinations.length; i++) {
-		if (winningCombinations[i].combination.every(item => pos.includes(item))) {
-			classLine = winningCombinations[i].lineClass;
+		if (winningCombinations[i].combination.every(item => pos.includes(item))) 
 			return true;
-		}
 	}
 	return false;
 }
